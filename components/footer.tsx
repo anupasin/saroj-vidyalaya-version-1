@@ -75,7 +75,7 @@ const Footer = () => {
               <li className="flex items-start gap-2">
                 <span>✉️</span>
                 <a href="mailto:sarojvidyalaya@gmail.com" className="text-gray-300 hover:text-brand-gold transition-colors">
-                  sarojvidyalaya@gmail.com
+                  birupia@gmail.com
                 </a>
               </li>
             </ul>
