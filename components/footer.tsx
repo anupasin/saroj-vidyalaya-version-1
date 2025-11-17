@@ -73,12 +73,6 @@ const Footer = () => {
                 <span className="text-gray-300">2/701, VBHC Vaibhav, Anekal, Bengaluru</span>
               </li>
               <li className="flex items-start gap-2">
-                <span>📞</span>
-                <a href="tel:+919482598395" className="text-gray-300 hover:text-brand-gold transition-colors">
-                  +91 9482598395
-                </a>
-              </li>
-              <li className="flex items-start gap-2">
                 <span>✉️</span>
                 <a href="mailto:sarojvidyalaya@gmail.com" className="text-gray-300 hover:text-brand-gold transition-colors">
                   sarojvidyalaya@gmail.com

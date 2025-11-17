@@ -25,6 +25,11 @@ export default function Home() {
       <HeroSection />
       
       <div className="container mx-auto px-4 py-12">
+        {/* In Memory Heading */}
+        <h1 className="text-3xl sm:text-4xl font-bold font-nunito text-center mb-6 sm:mb-8 text-foreground">
+          In Memory of Saroj Singh
+        </h1>
+
         {/* Dedication Section */}
         <div className="bg-primary/10 rounded-lg p-4 sm:p-6 mb-8 sm:mb-12 max-w-5xl mx-4 sm:mx-auto border border-primary/20 overflow-hidden">
           <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
