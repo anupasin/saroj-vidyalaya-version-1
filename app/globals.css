@@ -37,10 +37,20 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  
+  /* Add brand colors */
+  --color-brand-beige: var(--brand-beige);
+  --color-brand-peach: var(--brand-peach);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-dark-gold: var(--brand-dark-gold);
+  
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  
+  /* Add fade-in-up animation */
+  --animate-fade-in-up: fadeInUp 0.6s ease-out;
 }
 
 :root {
@@ -77,6 +87,12 @@
   --sidebar-accent-foreground: oklch(0.35 0.08 25);
   --sidebar-border: oklch(0.9 0.02 85);
   --sidebar-ring: oklch(0.65 0.15 45);
+  
+  /* Brand colors in oklch format for consistency */
+  --brand-beige: oklch(0.92 0.03 75);  /* Warm beige */
+  --brand-peach: oklch(0.95 0.05 65);   /* Soft peach */
+  --brand-gold: oklch(0.70 0.12 85);    /* Warm gold */
+  --brand-dark-gold: oklch(0.60 0.12 85); /* Darker gold */
 }
 
 .dark {
@@ -111,6 +127,12 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  
+  /* Brand colors for dark mode - slightly adjusted */
+  --brand-beige: oklch(0.35 0.03 75);
+  --brand-peach: oklch(0.40 0.05 65);
+  --brand-gold: oklch(0.75 0.12 85);
+  --brand-dark-gold: oklch(0.65 0.12 85);
 }
 
 @layer base {
@@ -125,5 +147,17 @@
 @layer utilities {
   .font-nunito {
     font-family: var(--font-nunito), sans-serif;
+  }
+}
+
+/* Keyframe for fade-in-up animation */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

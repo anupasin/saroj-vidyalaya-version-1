@@ -2,6 +2,8 @@ import Image from "next/image";
 import { CourseCard } from "@/components/course-card";
 import { getAllCourses } from "@/lib/data/get-all-courses";
 import { subjectIcons, subjectColors } from "@/lib/constants/subjects";
+import HeroSection from '@/components/HeroSection';
+
 
 function getSubjects() {
   const courses = getAllCourses();
@@ -19,37 +21,10 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-linear-to-b from-background to-secondary/20">
+      {/* Hero Section - MOVED OUTSIDE container */}
+      <HeroSection />
+      
       <div className="container mx-auto px-4 py-12">
-        {/* Hero Section */}
-        <div className="text-center mb-8 sm:mb-12 space-y-4 px-4">
-          <div className="flex justify-center mb-4">
-            <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40">
-              <Image
-                src="/lotus.png"
-                alt="Lotus flower - symbol of Saroj"
-                fill
-                className="object-contain drop-shadow-lg"
-                priority
-              />
-            </div>
-          </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold font-nunito text-foreground">
-            Welcome to Saroj Vidyalaya
-          </h1>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto font-sans px-4">
-          Where learning blossoms like the lotus in the dawn's embrace, nurturing young minds to unfold their petals of curiosity, creativity, and wisdom.
-          </p>
-          <div className="pt-2">
-            <p className="text-base sm:text-lg text-primary font-nunito italic">
-              Created with love in memory of my divine mother, Saroj
-            </p>
-            <p className="text-sm sm:text-base text-muted-foreground font-sans mt-2">
-              <span className="font-semibold">Saroj</span> means "lotus" — a flower that rises beautifully from the mud, 
-              just as learning helps us grow and bloom.
-            </p>
-          </div>
-        </div>
-
         {/* Dedication Section */}
         <div className="bg-primary/10 rounded-lg p-4 sm:p-6 mb-8 sm:mb-12 max-w-5xl mx-4 sm:mx-auto border border-primary/20 overflow-hidden">
           <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
