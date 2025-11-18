@@ -1,4 +1,4 @@
-import { CourseCard } from "@/components/course-card";
+import { CourseCard } from "@/components/CourseCard";
 import { getAllCourses } from "@/lib/data/get-all-courses";
 import { subjectIcons, subjectColors } from "@/lib/constants/subjects";
 

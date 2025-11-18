@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Quiz } from "@/components/quiz";
-import { LessonCard } from "@/components/lesson-card";
+import { Quiz } from "@/components/Quiz";
+import { LessonCard } from "@/components/LessonCard";
 import { LessonNavigation } from "@/components/lesson-navigation";
-import { CourseProgress } from "@/components/course-progress";
+import { CourseProgress } from "@/components/CourseProgress";
 import type { Course } from "@/lib/types/course";
 
 interface CourseContentProps {
