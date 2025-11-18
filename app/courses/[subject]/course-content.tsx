@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { Quiz } from "@/components/Quiz";
 import { LessonCard } from "@/components/LessonCard";
-import { LessonNavigation } from "@/components/lesson-navigation";
+import { LessonNavigation } from "@/components/LessonNavigation";
 import { CourseProgress } from "@/components/CourseProgress";
 import type { Course } from "@/lib/types/course";
 
