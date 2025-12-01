@@ -76,7 +76,7 @@ export default function ElectrochemicalCellsPage() {
     <div className="container mx-auto px-6 pt-24 pb-12 max-w-4xl">
       <div className="prose prose-lg dark:prose-invert max-w-none">
         <h1 className="text-4xl md:text-5xl font-nunito font-bold text-brand-gold mb-8">
-          Comprehensive Content Outline for Electrochemical Cells
+          The Electrochemical Revolution: From Simple Cells to Earth's Hidden Energy Treasure
         </h1>
 
         <section className="mb-12">
