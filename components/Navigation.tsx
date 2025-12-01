@@ -35,6 +35,9 @@ const Navbar = () => {
           <Link href="/courses" className="text-gray-700 dark:text-gray-300 hover:text-brand-gold transition-colors">
             Courses
           </Link>
+          <Link href="/topics" className="text-gray-700 dark:text-gray-300 hover:text-brand-gold transition-colors">
+            Topics
+          </Link>
         </div>
         
         {/* Mobile Menu Button */}
@@ -64,6 +67,13 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               Courses
+            </Link>
+            <Link 
+              href="/topics" 
+              className="text-gray-700 dark:text-gray-300 py-2 px-4 hover:bg-brand-gold/10 rounded" 
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Topics
             </Link>
           </div>
         </div>

@@ -15,7 +15,12 @@ function getSubjects() {
     icon: subjectIcons[course.subject] || "📖",
   }));
 }
+import type { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Home",
+  description: "Welcome to Saroj Vidyalaya, a platform for joyful learning.",
+};
 export default function Home() {
   const subjects = getSubjects();
 
