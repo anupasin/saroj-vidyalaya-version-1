@@ -5,10 +5,10 @@ import { Quiz, QuizQuestion } from "@/components/Quiz";
 
 import Image from "next/image";
 
-const IllustrationPlaceholder = ({ prompt, title, imageSrc }: { prompt: string; title: string; imageSrc?: string }) => {
+const IllustrationPlaceholder = ({ prompt, title, imageSrc, className }: { prompt: string; title: string; imageSrc?: string; className?: string }) => {
   if (imageSrc) {
     return (
-      <div className="my-8 rounded-lg overflow-hidden shadow-lg">
+      <div className={`rounded-lg overflow-hidden shadow-lg ${className || "my-8"}`}>
         <Image 
           src={imageSrc} 
           alt={title} 
@@ -20,7 +20,7 @@ const IllustrationPlaceholder = ({ prompt, title, imageSrc }: { prompt: string; 
     );
   }
   return (
-    <div className="my-8 p-6 bg-gray-50 dark:bg-gray-800 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg">
+    <div className={`p-6 bg-gray-50 dark:bg-gray-800 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg ${className || "my-8"}`}>
       <div className="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-2">
         Illustration Placeholder: {title}
       </div>
@@ -624,13 +624,11 @@ export default function ElectrochemicalCellsPage() {
           <p className="mt-4">
             The story of electrochemical cells thus comes full circle: from simple laboratory experiments with zinc and copper, to powering modern electronics, to potentially revolutionizing how humanity generates and uses energy.
           </p>
-          <p className="mt-4">
-            Your mother, through Saroj Vidyalaya, would be teaching students not just about chemical reactions and electricity, but about how understanding fundamental science can illuminate pathways to solving humanity's greatest challenges.
-          </p>
           <IllustrationPlaceholder
             title="Final Illustration Prompt 14"
             prompt="A beautiful summarizing illustration showing the evolution/connection: Bottom level shows a simple voltaic cell (zinc-copper in beakers) with arrows pointing up to middle level showing a modern hydrogen fuel cell (sleek, technological), with arrows pointing to the top level showing a cutaway of Earth with natural hydrogen formation underground. Connect all three with glowing energy flows. On one side, show historical scientists (like Alessandro Volta) with thought bubbles, and on the other side, show modern researchers with drilling equipment. Above everything, show a clean, green Earth with the sun shining. Title it 'From Discovery to Future: The Electrochemical Revolution.'"
             imageSrc="/electrochemical-cells/electrochemical_evolution.png"
+            className="mt-4 mb-8"
           />
         </section>
 
