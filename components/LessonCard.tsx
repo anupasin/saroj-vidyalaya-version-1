@@ -7,6 +7,7 @@ import type { Lesson } from "@/lib/types/course";
 import { markLessonComplete, isLessonComplete, markLessonIncomplete } from "@/lib/progress";
 import type { Subject } from "@/lib/types/course";
 import { useState, useEffect } from "react";
+import { PortableText } from "./PortableText";
 
 interface LessonCardProps {
   lesson: Lesson;
@@ -54,9 +55,9 @@ export function LessonCard({ lesson, subject, lessonNumber }: LessonCardProps) {
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-foreground font-sans text-lg leading-relaxed">
-          {lesson.content}
-        </p>
+        <div className="text-foreground font-sans text-lg leading-relaxed">
+          <PortableText value={lesson.content} />
+        </div>
         {lesson.analogy && (
           <div className="bg-accent/20 rounded-lg p-4 border-l-4 border-accent">
             <p className="font-nunito font-semibold text-foreground mb-2">

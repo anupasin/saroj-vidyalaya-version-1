@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
-import { getCourseBySubject } from "@/lib/data/get-course";
-import { isValidSubject } from "@/lib/utils/subject-validation";
 import { CourseContent } from "./course-content";
+import { sanityFetch } from "@/sanity/lib/fetch";
+import { COURSE_QUERY } from "@/sanity/lib/queries";
 
 export default async function CoursePage({
   params,
@@ -10,11 +10,10 @@ export default async function CoursePage({
 }) {
   const { subject } = await params;
   
-  if (!isValidSubject(subject)) {
-    notFound();
-  }
-  
-  const course = getCourseBySubject(subject);
+  const course = await sanityFetch<any>({
+    query: COURSE_QUERY,
+    params: { slug: subject },
+  });
 
   if (!course) {
     notFound();

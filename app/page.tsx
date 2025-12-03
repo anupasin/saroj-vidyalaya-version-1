@@ -1,28 +1,27 @@
 import Image from "next/image";
 import { CourseCard } from "@/components/CourseCard";
-import { getAllCourses } from "@/lib/data/get-all-courses";
 import { subjectIcons, subjectColors } from "@/lib/constants/subjects";
 import HeroSection from '@/components/HeroSection';
-
-
-function getSubjects() {
-  const courses = getAllCourses();
-  return courses.map((course) => ({
-    title: course.title,
-    description: course.description,
-    href: `/courses/${course.subject}`,
-    color: subjectColors[course.subject] || "bg-gray-200",
-    icon: subjectIcons[course.subject] || "📖",
-  }));
-}
+import { sanityFetch } from "@/sanity/lib/fetch";
+import { COURSES_QUERY } from "@/sanity/lib/queries";
 import type { Metadata } from "next";
+import { type Subject } from "@/lib/types/course";
 
 export const metadata: Metadata = {
   title: "Home",
   description: "Welcome to Saroj Vidyalaya, a platform for joyful learning.",
 };
-export default function Home() {
-  const subjects = getSubjects();
+
+export default async function Home() {
+  const courses = await sanityFetch<any[]>({ query: COURSES_QUERY });
+
+  const subjects = courses.map((course) => ({
+    title: course.title,
+    description: course.description,
+    href: `/courses/${course.slug.current}`,
+    color: subjectColors[course.subject as Subject] || "bg-gray-200",
+    icon: subjectIcons[course.subject as Subject] || "📖",
+  }));
 
   return (
     <div className="min-h-screen bg-linear-to-b from-background to-secondary/20">

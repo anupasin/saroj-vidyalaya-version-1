@@ -1,11 +1,12 @@
 import { MetadataRoute } from 'next'
-import { getAllCourses } from '@/lib/data/get-all-courses'
+import { sanityFetch } from "@/sanity/lib/fetch";
+import { COURSES_QUERY } from "@/sanity/lib/queries";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-    const courses = getAllCourses()
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+    const courses = await sanityFetch<any[]>({ query: COURSES_QUERY });
 
     const courseRoutes = courses.map((course) => ({
-        url: `https://saroj-vidyalaya.vercel.app/courses/${course.subject}`,
+        url: `https://saroj-vidyalaya.vercel.app/courses/${course.slug.current}`,
         lastModified: new Date(),
         changeFrequency: 'monthly' as const,
         priority: 0.8,

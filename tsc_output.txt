@@ -1,0 +1,3 @@
+sanity.config.ts(7,28): error TS2307: Cannot find module '@sanity/vision' or its corresponding type declarations.
+sanity/lib/image.ts(1,8): error TS2613: Module '"D:/saroj-vidyalaya-version 1/node_modules/@sanity/image-url/lib/index"' has no default export. Did you mean to use 'import { createImageUrlBuilder } from "D:/saroj-vidyalaya-version 1/node_modules/@sanity/image-url/lib/index"' instead?
+sanity/lib/image.ts(2,35): error TS2307: Cannot find module '@sanity/image-url/lib/types/types' or its corresponding type declarations.

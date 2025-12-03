@@ -8,7 +8,7 @@ export type Subject =
 
 export interface Lesson {
   title: string;
-  content: string;
+  content: any;
   analogy?: string;
   example?: string;
   order: number;

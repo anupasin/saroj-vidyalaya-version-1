@@ -1,20 +1,19 @@
 import { CourseCard } from "@/components/CourseCard";
-import { getAllCourses } from "@/lib/data/get-all-courses";
 import { subjectIcons, subjectColors } from "@/lib/constants/subjects";
+import { sanityFetch } from "@/sanity/lib/fetch";
+import { COURSES_QUERY } from "@/sanity/lib/queries";
+import { type Subject } from "@/lib/types/course";
 
-function getSubjects() {
-  const courses = getAllCourses();
-  return courses.map((course) => ({
+export default async function CoursesPage() {
+  const courses = await sanityFetch<any[]>({ query: COURSES_QUERY });
+
+  const subjects = courses.map((course) => ({
     title: course.title,
     description: course.description,
-    href: `/courses/${course.subject}`,
-    color: subjectColors[course.subject] || "bg-gray-200",
-    icon: subjectIcons[course.subject] || "📖",
+    href: `/courses/${course.slug.current}`,
+    color: subjectColors[course.subject as Subject] || "bg-gray-200",
+    icon: subjectIcons[course.subject as Subject] || "📖",
   }));
-}
-
-export default function CoursesPage() {
-  const subjects = getSubjects();
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
@@ -36,4 +35,3 @@ export default function CoursesPage() {
     </div>
   );
 }
-

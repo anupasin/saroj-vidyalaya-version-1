@@ -1,0 +1,1 @@
+sanity/lib/image.ts(1,8): error TS1192: Module '"D:/saroj-vidyalaya-version 1/node_modules/@sanity/image-url/lib/index"' has no default export.
