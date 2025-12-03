@@ -45,6 +45,7 @@ export default async function Home() {
                   alt="Saroj - A wonderful teacher and loving mother"
                   fill
                   className="object-cover"
+                  unoptimized
                   priority
                 />
               </div>

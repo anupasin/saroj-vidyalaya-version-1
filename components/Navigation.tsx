@@ -20,6 +20,7 @@ const Navbar = () => {
               width={40}
               height={40}
               className="object-contain" 
+              unoptimized 
             />
           </div>
           <h1 className="text-xl md:text-2xl font-nunito font-bold text-brand-gold">

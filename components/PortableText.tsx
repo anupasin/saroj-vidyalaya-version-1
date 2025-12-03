@@ -17,6 +17,7 @@ const components: PortableTextComponents = {
             width={800}
             height={400}
             className="w-full h-auto object-cover"
+            unoptimized
           />
           {value.caption && (
             <div className="text-center text-sm text-gray-500 mt-2">{value.caption}</div>
