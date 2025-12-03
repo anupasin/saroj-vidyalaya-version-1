@@ -1,7 +1,6 @@
 import { PortableText as PortableTextReact, PortableTextComponents } from '@portabletext/react'
 import { IllustrationPlaceholder } from './IllustrationPlaceholder'
 import { urlFor } from '@/sanity/lib/image'
-import Image from 'next/image'
 
 const components: PortableTextComponents = {
   types: {
@@ -11,13 +10,10 @@ const components: PortableTextComponents = {
       }
       return (
         <div className="my-8 rounded-lg overflow-hidden shadow-lg">
-          <Image
+          <img
             src={urlFor(value).url()}
             alt={value.alt || 'Image'}
-            width={800}
-            height={400}
             className="w-full h-auto object-cover"
-            unoptimized
           />
           {value.caption && (
             <div className="text-center text-sm text-gray-500 mt-2">{value.caption}</div>

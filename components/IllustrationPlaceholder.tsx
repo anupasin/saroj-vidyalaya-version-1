@@ -1,17 +1,13 @@
 import React from "react";
-import Image from "next/image";
 
 export const IllustrationPlaceholder = ({ prompt, title, imageSrc, className }: { prompt: string; title: string; imageSrc?: string; className?: string }) => {
   if (imageSrc) {
     return (
       <div className={`rounded-lg overflow-hidden shadow-lg ${className || "my-8"}`}>
-        <Image 
+        <img 
           src={imageSrc} 
           alt={title} 
-          width={800} 
-          height={400} 
           className="w-full h-auto object-cover"
-          unoptimized
         />
       </div>
     );
