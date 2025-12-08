@@ -1,20 +1,34 @@
 import { CourseCard } from "@/components/CourseCard";
-import { getAllCourses } from "@/lib/data/get-all-courses";
+import { client } from "@/lib/sanity.client";
 import { subjectIcons, subjectColors } from "@/lib/constants/subjects";
 
-function getSubjects() {
-  const courses = getAllCourses();
-  return courses.map((course) => ({
-    title: course.title,
-    description: course.description,
-    href: `/courses/${course.subject}`,
-    color: subjectColors[course.subject] || "bg-gray-200",
-    icon: subjectIcons[course.subject] || "📖",
-  }));
-}
+// Define what we need from Sanity to build the card
+const query = `
+  *[_type == "course"] {
+    title,
+    description,
+    subject
+  }
+`;
 
-export default function CoursesPage() {
-  const subjects = getSubjects();
+export default async function CoursesPage() {
+  // 1. Fetch data dynamically from Sanity
+  const courses = await client.fetch(query);
+
+  // 2. Map the Sanity data to your UI structure
+  // We use the subject slug (e.g., "mathematics") to look up the correct icon/color
+  const subjects = courses.map((course: any) => {
+    const subjectSlug = course.subject.current;
+    
+    return {
+      title: course.title,
+      description: course.description,
+      href: `/courses/${subjectSlug}`,
+      // Use the constant if it exists, otherwise default to gray/book
+      color: subjectColors[subjectSlug as keyof typeof subjectColors] || "bg-gray-200",
+      icon: subjectIcons[subjectSlug as keyof typeof subjectIcons] || "📖",
+    };
+  });
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">
@@ -29,11 +43,10 @@ export default function CoursesPage() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-        {subjects.map((subject) => (
+        {subjects.map((subject: any) => (
           <CourseCard key={subject.href} {...subject} />
         ))}
       </div>
     </div>
   );
 }
-

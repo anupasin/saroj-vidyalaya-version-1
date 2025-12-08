@@ -1,7 +1,18 @@
 import { notFound } from "next/navigation";
-import { getCourseBySubject } from "@/lib/data/get-course";
-import { isValidSubject } from "@/lib/utils/subject-validation";
+import { client } from "@/lib/sanity.client";
 import { CourseContent } from "./course-content";
+
+// GROQ Query to fetch the full course content
+// We flatten "subject.current" to just "subject" to match your Typescript interfaces
+const query = `
+  *[_type == "course" && subject.current == $subject][0] {
+    title,
+    description,
+    "subject": subject.current,
+    lessons,
+    quiz
+  }
+`;
 
 export default async function CoursePage({
   params,
@@ -10,15 +21,14 @@ export default async function CoursePage({
 }) {
   const { subject } = await params;
   
-  if (!isValidSubject(subject)) {
-    notFound();
-  }
-  
-  const course = getCourseBySubject(subject);
+  // 1. Fetch from Sanity using the URL parameter
+  const course = await client.fetch(query, { subject });
 
+  // 2. If Sanity returns null, show 404 Page
   if (!course) {
     notFound();
   }
 
+  // 3. Pass data to your existing content renderer
   return <CourseContent course={course} />;
 }
