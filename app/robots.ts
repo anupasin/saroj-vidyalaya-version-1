@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
             userAgent: '*',
             allow: '/',
         },
-        sitemap: 'https://saroj-vidyalaya.vercel.app/sitemap.xml',
+        sitemap: 'https://sarojvidyalaya.com/sitemap.xml',
     }
 }
