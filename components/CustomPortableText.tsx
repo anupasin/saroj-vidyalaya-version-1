@@ -6,17 +6,18 @@ import { Quiz } from '@/components/Quiz'
 // Define how custom blocks should look
 const components: PortableTextComponents = {
   types: {
-    // 1. The Illustration Block (Now clean, image only)
+    // 1. The Illustration Block (Fixed: No Clipping)
     illustration: ({ value }: any) => {
       return (
         <div className="my-8 rounded-lg overflow-hidden shadow-lg border border-gray-200 dark:border-gray-700">
-          <div className="relative w-full h-[400px]">
+          <div className="relative w-full">
             {value.image && (
               <Image
                 src={urlFor(value.image).width(800).url()}
                 alt={value.title || 'Illustration'}
-                fill
-                className="object-cover"
+                width={800}
+                height={500} // This is an aspect ratio guide; CSS below overrides it
+                className="w-full h-auto" // This ensures the image scales naturally
               />
             )}
           </div>
