@@ -3,10 +3,9 @@ import Image from 'next/image'
 import { urlFor } from '@/lib/sanity.client'
 import { Quiz } from '@/components/Quiz'
 
-// Define how custom blocks should look
 const components: PortableTextComponents = {
   types: {
-    // 1. The Illustration Block (Fixed: No Clipping)
+    // 1. Illustration Block
     illustration: ({ value }: any) => {
       return (
         <div className="my-8 rounded-lg overflow-hidden shadow-lg border border-gray-200 dark:border-gray-700">
@@ -16,42 +15,59 @@ const components: PortableTextComponents = {
                 src={urlFor(value.image).width(800).url()}
                 alt={value.title || 'Illustration'}
                 width={800}
-                height={500} // This is an aspect ratio guide; CSS below overrides it
-                className="w-full h-auto" // This ensures the image scales naturally
+                height={500}
+                className="w-full h-auto"
               />
             )}
           </div>
         </div>
       )
     },
-    // 2. The Embedded Quiz Block
+
+    // 2. Embedded Quiz Block
     embeddedQuiz: ({ value }: any) => {
       return (
         <div className="mt-12 mb-12">
-           <Quiz 
-             title={value.title} 
-             questions={value.questions} 
-           />
+          <Quiz title={value.title} questions={value.questions} />
         </div>
       )
     },
   },
-  // Style standard text blocks (H2, H3, Lists)
+
   block: {
+    // Normal paragraphs
+    normal: ({ children }) => (
+      <p className="mb-4 leading-relaxed whitespace-pre-line">{children}</p>
+    ),
+
+    // Headings
     h2: ({ children }) => (
-      <h2 className="text-3xl font-nunito font-bold text-primary mt-12 mb-4">{children}</h2>
+      <h2 className="text-3xl font-nunito font-bold text-primary mt-12 mb-4">
+        {children}
+      </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="text-2xl font-nunito font-semibold text-gray-800 dark:text-gray-200 mt-8 mb-3">{children}</h3>
+      <h3 className="text-2xl font-nunito font-semibold text-gray-800 dark:text-gray-200 mt-8 mb-3">
+        {children}
+      </h3>
     ),
+
+    // Blockquote
     blockquote: ({ children }) => (
       <blockquote className="border-l-4 border-brand-gold pl-4 italic text-gray-700 dark:text-gray-300 my-4 bg-gray-50 dark:bg-gray-800/50 p-4 rounded-r">
         {children}
       </blockquote>
     ),
   },
+
+  // Lists
   list: {
-    bullet: ({ children }) => <ul className="list-disc pl-6 space-y-2 mb-6">{children}</ul>,
+    bullet: ({ children }) => (
+      <ul className="list-disc pl-6 space-y-2 mb-6">{children}</ul>
+    ),
+    number: ({ children }) => (
+      <ol className="list-decimal pl-6 space-y-2 mb-6">{children}</ol>
+    ),
   },
 }
 

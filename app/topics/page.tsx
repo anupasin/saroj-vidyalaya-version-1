@@ -20,6 +20,13 @@ export default function TopicsPage() {
           color="bg-blue-100"
           icon="🔋"
         />
+        <CourseCard
+          title="The Ultimate Solar Panel"
+          description="How Plants Turned Sunlight into Lunch (And Why We Should Care)"
+          href="/topics/the-ultimate-solar-panel"
+          color="bg-green-100"
+          icon="🍃"
+        />
       </div>
     </div>
   );
