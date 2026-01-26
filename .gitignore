@@ -42,3 +42,8 @@ next-env.d.ts
 
 # text files
 Saroj Vidyalaya Development Roadmap.txt
+
+# sanity
+sanity/node_modules
+sanity/.sanity
+sanity/dist

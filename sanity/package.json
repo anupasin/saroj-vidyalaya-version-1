@@ -12,6 +12,7 @@
   "type": "commonjs",
   "dependencies": {
     "@sanity/structure": "^2.36.2",
-    "sanity": "^5.6.0"
+    "sanity": "^5.6.0",
+    "styled-components": "^6.3.8"
   }
 }
