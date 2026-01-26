@@ -34,6 +34,31 @@ const components: PortableTextComponents = {
     },
   },
 
+  marks: {
+    link: ({ value, children }) => {
+      const isExternal = value?.href?.startsWith('http')
+
+      return (
+        <a
+          href={value.href}
+          target={isExternal ? '_blank' : undefined}
+          rel={isExternal ? 'noopener noreferrer' : undefined}
+          className="
+            text-primary
+            underline
+            underline-offset-4
+            decoration-primary/60
+            hover:decoration-primary
+            hover:text-primary/80
+            transition-colors
+          "
+        >
+          {children}
+        </a>
+      )
+    },
+  },
+
   block: {
     // Normal paragraphs
     normal: ({ children }) => (
