@@ -1,17 +1,15 @@
 import { defineConfig } from 'sanity'
 import { structureTool } from 'sanity/structure'
 import { schema } from './schemaTypes'
-import { projectId, dataset, apiVersion } from './env'
 
 export default defineConfig({
     name: 'default',
     title: 'Saroj Vidyalaya Studio',
 
-    projectId,
-    dataset,
-    apiVersion,
+    projectId: 'fqzo20e9',
+    dataset: 'production',
+    apiVersion: '2024-01-01',
 
     plugins: [structureTool()],
-
     schema,
 })
