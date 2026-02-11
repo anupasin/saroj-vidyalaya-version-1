@@ -47,3 +47,5 @@ Saroj Vidyalaya Development Roadmap.txt
 sanity/node_modules
 sanity/.sanity
 sanity/dist
+# clerk configuration (can include secrets)
+/.clerk/
