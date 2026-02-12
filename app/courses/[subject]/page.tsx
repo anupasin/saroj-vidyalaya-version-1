@@ -1,9 +1,10 @@
 import { notFound } from "next/navigation";
 import { client } from "@/lib/sanity.client";
 import { CourseContent } from "./course-content";
+import { auth } from '@clerk/nextjs/server';
+import { AuthGate } from '@/components/AuthGate';
 
 // GROQ Query to fetch the full course content
-// We flatten "subject.current" to just "subject" to match your Typescript interfaces
 const query = `
   *[_type == "course" && subject.current == $subject][0] {
     title,
@@ -20,15 +21,27 @@ export default async function CoursePage({
   params: Promise<{ subject: string }>;
 }) {
   const { subject } = await params;
-  
-  // 1. Fetch from Sanity using the URL parameter
+
   const course = await client.fetch(query, { subject });
 
-  // 2. If Sanity returns null, show 404 Page
   if (!course) {
     notFound();
   }
 
-  // 3. Pass data to your existing content renderer
+  const { userId } = await auth();
+
+  // If not authenticated, show blurred content WITH auth gate overlay
+  if (!userId) {
+    return (
+      <>
+        <div className="blur-sm pointer-events-none select-none">
+          <CourseContent course={course} />
+        </div>
+        <AuthGate lessonTitle={course.title} />
+      </>
+    );
+  }
+
+  // User is authenticated - show content without overlay
   return <CourseContent course={course} />;
 }

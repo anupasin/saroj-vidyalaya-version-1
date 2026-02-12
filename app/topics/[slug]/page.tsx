@@ -3,6 +3,8 @@ import { client } from '@/lib/sanity.client'
 import { CustomPortableText } from '@/components/CustomPortableText'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import { auth } from '@clerk/nextjs/server'
+import { AuthGate } from '@/components/AuthGate'
 
 // Query to fetch topic with related topics
 const query = `
@@ -31,7 +33,10 @@ export default async function TopicPage({ params }: PageProps) {
     return notFound()
   }
 
-  return (
+  const { userId } = await auth();
+
+  // Define the topic content component
+  const TopicContent = () => (
     <div className="container mx-auto px-6 pt-24 pb-12 max-w-4xl">
       <article className="prose prose-lg dark:prose-invert max-w-none">
 
@@ -75,5 +80,20 @@ export default async function TopicPage({ params }: PageProps) {
         </div>
       )}
     </div>
-  )
+  );
+
+  // If not authenticated, show blurred content WITH auth gate overlay
+  if (!userId) {
+    return (
+      <>
+        <div className="blur-sm pointer-events-none select-none">
+          <TopicContent />
+        </div>
+        <AuthGate lessonTitle={data.title} />
+      </>
+    );
+  }
+
+  // User is authenticated - show content without overlay
+  return <TopicContent />;
 }
