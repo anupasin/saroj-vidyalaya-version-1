@@ -43,12 +43,14 @@ const Navbar = () => {
           {/* Auth buttons - Desktop */}
           <SignedOut>
             <SignInButton mode="modal">
-              <button className="text-gray-700 dark:text-gray-300 hover:text-brand-gold transition-colors">
+              {/* Added cursor-pointer */}
+              <button className="text-gray-700 dark:text-gray-300 hover:text-brand-gold transition-colors cursor-pointer">
                 Sign In
               </button>
             </SignInButton>
             <SignUpButton mode="modal">
-              <Button className="bg-brand-gold hover:bg-brand-gold/90 text-white">
+              {/* Added cursor-pointer to the UI Button */}
+              <Button className="bg-brand-gold hover:bg-brand-gold/90 text-white cursor-pointer">
                 Sign Up
               </Button>
             </SignUpButton>
@@ -61,7 +63,7 @@ const Navbar = () => {
             <UserButton
               appearance={{
                 elements: {
-                  avatarBox: "w-10 h-10"
+                  avatarBox: "w-10 h-10 cursor-pointer" // Ensures the profile pic also shows the hand
                 }
               }}
             />
@@ -70,7 +72,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden p-2"
+          className="md:hidden p-2 cursor-pointer"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
         >
@@ -108,7 +110,7 @@ const Navbar = () => {
             <SignedOut>
               <SignInButton mode="modal">
                 <button
-                  className="text-gray-700 dark:text-gray-300 py-2 px-4 hover:bg-brand-gold/10 rounded text-left"
+                  className="text-gray-700 dark:text-gray-300 py-2 px-4 hover:bg-brand-gold/10 rounded text-left cursor-pointer"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Sign In
@@ -116,7 +118,7 @@ const Navbar = () => {
               </SignInButton>
               <SignUpButton mode="modal">
                 <Button
-                  className="bg-brand-gold hover:bg-brand-gold/90 text-white w-full"
+                  className="bg-brand-gold hover:bg-brand-gold/90 text-white w-full cursor-pointer"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Sign Up
@@ -136,7 +138,7 @@ const Navbar = () => {
                 <UserButton
                   appearance={{
                     elements: {
-                      avatarBox: "w-10 h-10"
+                      avatarBox: "w-10 h-10 cursor-pointer"
                     }
                   }}
                 />
