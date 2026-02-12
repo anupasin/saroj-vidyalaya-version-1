@@ -12,7 +12,7 @@ export default async function DashboardPage() {
         redirect('/');
     }
 
-    const supabase = await createSupabaseServerClient();
+    const supabase = createSupabaseServerClient();
 
     // Fetch user profile
     const { data: user } = await supabase

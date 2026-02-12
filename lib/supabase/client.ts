@@ -2,36 +2,43 @@ import { createClient } from '@supabase/supabase-js'
 import { auth } from '@clerk/nextjs/server'
 
 /**
- * Creates a Supabase client with Clerk authentication
- * This is for SERVER COMPONENTS only
+ * Creates a Supabase client for SERVER COMPONENTS only.
+ * Uses Clerk's native Third-Party Auth (TPA) integration — the 2025 approach.
+ * No JWT template needed, no shared secret, no manual Bearer header.
+ * Supabase receives the Clerk session token via the accessToken() callback.
  */
-export async function createSupabaseServerClient() {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
-
-    // Get the Clerk session token
-    const { getToken } = await auth()
-    const token = await getToken({ template: 'supabase' })
-
-    // Create Supabase client with Clerk token
-    const supabase = createClient(supabaseUrl, supabaseKey, {
-        global: {
-            headers: {
-                Authorization: token ? `Bearer ${token}` : '',
+export function createSupabaseServerClient() {
+    return createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
+        {
+            async accessToken() {
+                return (await auth()).getToken()
             },
-        },
-    })
-
-    return supabase
+        }
+    )
 }
 
 /**
- * Creates a Supabase client for CLIENT COMPONENTS
- * Use this in 'use client' components
+ * Creates a Supabase admin client that bypasses RLS entirely.
+ * Use ONLY in webhook handlers and server-side admin operations.
+ * Never expose this to the browser.
+ */
+export function createSupabaseAdminClient() {
+    return createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.SUPABASE_SECRET_KEY!
+    )
+}
+
+/**
+ * Creates a Supabase client for CLIENT COMPONENTS.
+ * Use this in 'use client' components.
+ * Note: RLS policies will apply — user must be authenticated via Clerk.
  */
 export function createSupabaseClient() {
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
-
-    return createClient(supabaseUrl, supabaseKey)
+    return createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
+    )
 }
