@@ -1,5 +1,5 @@
 import { auth } from '@clerk/nextjs/server';
-import { createSupabaseServerClient } from '@/lib/supabase/client';
+import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';

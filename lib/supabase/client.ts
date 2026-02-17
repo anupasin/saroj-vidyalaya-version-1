@@ -1,44 +1,26 @@
+'use client'
+
 import { createClient } from '@supabase/supabase-js'
-import { auth } from '@clerk/nextjs/server'
+import { useSession } from '@clerk/nextjs'
+import { useMemo } from 'react'
 
 /**
- * Creates a Supabase client for SERVER COMPONENTS only.
- * Uses Clerk's native Third-Party Auth (TPA) integration — the 2025 approach.
- * No JWT template needed, no shared secret, no manual Bearer header.
- * Supabase receives the Clerk session token via the accessToken() callback.
+ * Hook: Creates a Supabase client for CLIENT COMPONENTS.
+ * Must be used inside a 'use client' component or custom hook — not at module level.
+ * Passes the Clerk session token on every request so RLS authenticated
+ * policies are satisfied. The accessToken callback is lazy — Supabase calls
+ * it right before each request, so token rotation is handled automatically.
  */
-export function createSupabaseServerClient() {
-    return createClient(
+export function useSupabaseClient() {
+    const { session } = useSession()
+
+    return useMemo(() => createClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
         process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
         {
             async accessToken() {
-                return (await auth()).getToken()
+                return session?.getToken() ?? null
             },
         }
-    )
-}
-
-/**
- * Creates a Supabase admin client that bypasses RLS entirely.
- * Use ONLY in webhook handlers and server-side admin operations.
- * Never expose this to the browser.
- */
-export function createSupabaseAdminClient() {
-    return createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SECRET_KEY!
-    )
-}
-
-/**
- * Creates a Supabase client for CLIENT COMPONENTS.
- * Use this in 'use client' components.
- * Note: RLS policies will apply — user must be authenticated via Clerk.
- */
-export function createSupabaseClient() {
-    return createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
-    )
+    ), [session])
 }
