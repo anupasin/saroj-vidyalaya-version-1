@@ -3,7 +3,7 @@ import { createSupabaseServerClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BookOpen, Heart, User, Calendar, Sparkles } from 'lucide-react';
+import { BookOpen, Heart, User, Calendar, Sparkles, ShieldCheck } from 'lucide-react';
 
 export default async function DashboardPage() {
     const { userId } = await auth();
@@ -36,6 +36,8 @@ export default async function DashboardPage() {
         .order('created_at', { ascending: false });
 
     const firstName = user?.name?.split(' ')[0] ?? 'Explorer';
+    const isAdmin = user?.role === 'admin';
+
     const memberSince = user?.created_at
         ? new Date(user.created_at).toLocaleDateString('en-IN', {
             year: 'numeric',
@@ -69,14 +71,46 @@ export default async function DashboardPage() {
                         <p className="text-brand-gold font-nunito text-sm font-semibold tracking-wide uppercase mb-1">
                             Welcome back
                         </p>
-                        <h1 className="text-3xl sm:text-4xl font-nunito font-bold text-foreground">
-                            {firstName} 🌸
-                        </h1>
+                        <div className="flex items-center gap-2 justify-center sm:justify-start">
+                            <h1 className="text-3xl sm:text-4xl font-nunito font-bold text-foreground">
+                                {firstName} 🌸
+                            </h1>
+                            {/* Admin badge — only visible to admins */}
+                            {isAdmin && (
+                                <span className="flex items-center gap-1 text-xs font-semibold bg-brand-gold/20 text-brand-gold px-2.5 py-1 rounded-full border border-brand-gold/30">
+                                    <ShieldCheck size={12} />
+                                    Admin
+                                </span>
+                            )}
+                        </div>
                         <p className="text-muted-foreground mt-1 text-sm font-sans">
                             Every lesson is a small bloom. Keep exploring.
                         </p>
                     </div>
                 </div>
+
+                {/* Admin Panel Link — only for admins */}
+                {isAdmin && (
+                    <Link
+                        href="/admin"
+                        className="flex items-center justify-between bg-brand-gold/10 hover:bg-brand-gold/20 border border-brand-gold/30 rounded-2xl px-6 py-4 mb-6 transition-colors group"
+                    >
+                        <div className="flex items-center gap-3">
+                            <ShieldCheck size={20} className="text-brand-gold" />
+                            <div>
+                                <p className="font-nunito font-bold text-foreground text-sm">
+                                    Admin Panel
+                                </p>
+                                <p className="text-xs text-muted-foreground">
+                                    View learner stats, recent users, and site activity
+                                </p>
+                            </div>
+                        </div>
+                        <span className="text-brand-gold text-lg group-hover:translate-x-0.5 transition-transform">
+                            →
+                        </span>
+                    </Link>
+                )}
 
                 {/* Profile Card */}
                 <section className="bg-white rounded-2xl shadow-sm border border-brand-gold/20 p-6 mb-6">
