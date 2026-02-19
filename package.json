@@ -23,6 +23,7 @@
     "next-sanity": "^11.6.10",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
+    "resend": "^6.9.2",
     "sanity": "^4.20.3",
     "svix": "^1.84.1",
     "tailwind-merge": "^3.4.0"
