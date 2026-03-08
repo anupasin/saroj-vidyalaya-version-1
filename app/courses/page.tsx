@@ -2,6 +2,9 @@ import { CourseCard } from "@/components/CourseCard";
 import { client } from "@/lib/sanity.client";
 import { subjectIcons, subjectColors } from "@/lib/constants/subjects";
 
+export const revalidate = 0; // 👈 add this
+
+
 // Define what we need from Sanity to build the card
 const query = `
   *[_type == "course"] {
@@ -19,7 +22,7 @@ export default async function CoursesPage() {
   // We use the subject slug (e.g., "mathematics") to look up the correct icon/color
   const subjects = courses.map((course: any) => {
     const subjectSlug = course.subject.current;
-    
+
     return {
       title: course.title,
       description: course.description,
