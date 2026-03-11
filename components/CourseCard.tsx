@@ -13,8 +13,8 @@ interface CourseCardProps {
 export function CourseCard({ title, description, href, color, icon }: CourseCardProps) {
   return (
     <Link href={href} className="block h-full">
-      <Card className="h-full transition-all duration-300 hover:shadow-lg hover:scale-105 border-2 hover:border-primary/50">
-        <CardHeader>
+      <Card className="h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:scale-105 border-2 hover:border-primary/50">
+        <CardHeader className="flex-1">
           <div className={`w-12 h-12 rounded-full ${color} flex items-center justify-center mb-2`}>
             {icon && <span className="text-2xl">{icon}</span>}
           </div>
@@ -30,4 +30,3 @@ export function CourseCard({ title, description, href, color, icon }: CourseCard
     </Link>
   );
 }
-
