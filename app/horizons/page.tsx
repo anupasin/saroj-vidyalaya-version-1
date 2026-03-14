@@ -1,13 +1,16 @@
-import { HorizonCard } from "@/components/HorizonCard"
-import { client } from "@/lib/sanity.client"
-import type { Metadata } from "next"
+import { HorizonCard } from '@/components/HorizonCard';
+import { client } from '@/lib/sanity.client';
+import type { Metadata } from 'next';
 
-export const revalidate = 0
+export const revalidate = 0;
 
 export const metadata: Metadata = {
-    title: "New Horizons",
-    description: "Fresh insight cards across science, technology, mathematics, and beyond.",
-}
+    title: 'New Horizons',
+    description: 'Fresh insight cards from the edges of science, mathematics, technology, and human thought.',
+    alternates: {
+        canonical: 'https://sarojvidyalaya.com/horizons',
+    },
+};
 
 const query = `
   *[_type == "horizon"] | order(featured desc, publishedAt desc) {
@@ -19,10 +22,10 @@ const query = `
     publishedAt,
     featured
   }
-`
+`;
 
 export default async function HorizonsPage() {
-    const horizons = await client.fetch(query)
+    const horizons = await client.fetch(query);
 
     return (
         <div className="container mx-auto px-6 pt-24 pb-12">
@@ -57,5 +60,5 @@ export default async function HorizonsPage() {
                 </div>
             )}
         </div>
-    )
+    );
 }

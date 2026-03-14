@@ -5,6 +5,41 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { auth } from '@clerk/nextjs/server'
 import { AuthGate } from '@/components/AuthGate'
+import type { Metadata } from 'next';
+import { baseUrl } from '@/lib/constants/site';
+
+export async function generateStaticParams() {
+  const topics = await client.fetch(`*[_type == "topic"]{ "slug": slug.current }`);
+  return topics.map((t: any) => ({ slug: t.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const data = await client.fetch(
+    `*[_type == "topic" && slug.current == $slug][0]{ title, description }`,
+    { slug }
+  );
+
+  if (!data) return { title: 'Topic Not Found' };
+
+  return {
+    title: data.title,
+    description: data.description ?? '',
+    alternates: {
+      canonical: `${baseUrl}/topics/${slug}`,
+    },
+    openGraph: {
+      title: data.title,
+      description: data.description ?? '',
+      url: `${baseUrl}/topics/${slug}`,
+      type: 'article',
+    },
+  };
+}
 
 // Query to fetch topic with related topics
 const query = `

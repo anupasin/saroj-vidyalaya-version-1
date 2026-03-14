@@ -1,10 +1,11 @@
-import { notFound } from "next/navigation";
-import { client } from "@/lib/sanity.client";
-import { CourseContent } from "./course-content";
+import { notFound } from 'next/navigation';
+import { client } from '@/lib/sanity.client';
+import { CourseContent } from './course-content';
 import { auth } from '@clerk/nextjs/server';
 import { AuthGate } from '@/components/AuthGate';
+import type { Metadata } from 'next';
+import { baseUrl } from '@/lib/constants/site';
 
-// GROQ Query to fetch the full course content
 const query = `
   *[_type == "course" && subject.current == $subject][0] {
     title,
@@ -15,22 +16,48 @@ const query = `
   }
 `;
 
+export async function generateStaticParams() {
+  const courses = await client.fetch(`*[_type == "course"]{ "subject": subject.current }`);
+  return courses.map((c: any) => ({ subject: c.subject }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ subject: string }>;
+}): Promise<Metadata> {
+  const { subject } = await params;
+  const course = await client.fetch(query, { subject });
+
+  if (!course) return { title: 'Course Not Found' };
+
+  return {
+    title: course.title,
+    description: course.description,
+    alternates: {
+      canonical: `${baseUrl}/courses/${subject}`,
+    },
+    openGraph: {
+      title: course.title,
+      description: course.description,
+      url: `${baseUrl}/courses/${subject}`,
+      type: 'article',
+    },
+  };
+}
+
 export default async function CoursePage({
   params,
 }: {
   params: Promise<{ subject: string }>;
 }) {
   const { subject } = await params;
-
   const course = await client.fetch(query, { subject });
 
-  if (!course) {
-    notFound();
-  }
+  if (!course) notFound();
 
   const { userId } = await auth();
 
-  // If not authenticated, show blurred content WITH auth gate overlay
   if (!userId) {
     return (
       <>
@@ -42,6 +69,5 @@ export default async function CoursePage({
     );
   }
 
-  // User is authenticated - show content without overlay
   return <CourseContent course={course} />;
 }

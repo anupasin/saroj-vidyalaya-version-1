@@ -1,13 +1,15 @@
-import { CourseCard } from "@/components/CourseCard";
-import { client } from "@/lib/sanity.client";
-import type { Metadata } from "next";
+import { CourseCard } from '@/components/CourseCard';
+import { client } from '@/lib/sanity.client';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Topics",
-  description: "Explore deep-dive topics across science, nature, and wonder.",
+  title: 'Topics',
+  description: 'Explore deep-dive topics across science, nature, mathematics, and the wonders of the world.',
+  alternates: {
+    canonical: 'https://sarojvidyalaya.com/topics',
+  },
 };
 
-// Query to fetch all topics from Sanity
 const query = `
   *[_type == "topic"] | order(order asc) {
     title,
@@ -19,7 +21,6 @@ const query = `
 `;
 
 export default async function TopicsPage() {
-  // Fetch topics from Sanity
   const topics = await client.fetch(query);
 
   return (
@@ -40,8 +41,8 @@ export default async function TopicsPage() {
               title={topic.title}
               description={topic.description}
               href={`/topics/${topic.slug.current}`}
-              color={topic.color || "bg-gray-100"}
-              icon={topic.icon || "📖"}
+              color={topic.color || 'bg-gray-100'}
+              icon={topic.icon || '📖'}
             />
           ))}
         </div>

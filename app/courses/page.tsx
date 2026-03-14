@@ -1,11 +1,18 @@
-import { CourseCard } from "@/components/CourseCard";
-import { client } from "@/lib/sanity.client";
-import { subjectIcons, subjectColors } from "@/lib/constants/subjects";
+import { CourseCard } from '@/components/CourseCard';
+import { client } from '@/lib/sanity.client';
+import { subjectIcons, subjectColors } from '@/lib/constants/subjects';
+import type { Metadata } from 'next';
 
-export const revalidate = 0; // 👈 add this
+export const revalidate = 0;
 
+export const metadata: Metadata = {
+  title: 'All Courses',
+  description: 'Explore interactive courses in Mathematics, English, Science, Geography, Coding, and General Knowledge — designed to make learning joyful.',
+  alternates: {
+    canonical: 'https://sarojvidyalaya.com/courses',
+  },
+};
 
-// Define what we need from Sanity to build the card
 const query = `
   *[_type == "course"] {
     title,
@@ -15,21 +22,16 @@ const query = `
 `;
 
 export default async function CoursesPage() {
-  // 1. Fetch data dynamically from Sanity
   const courses = await client.fetch(query);
 
-  // 2. Map the Sanity data to your UI structure
-  // We use the subject slug (e.g., "mathematics") to look up the correct icon/color
   const subjects = courses.map((course: any) => {
     const subjectSlug = course.subject.current;
-
     return {
       title: course.title,
       description: course.description,
       href: `/courses/${subjectSlug}`,
-      // Use the constant if it exists, otherwise default to gray/book
-      color: subjectColors[subjectSlug as keyof typeof subjectColors] || "bg-gray-200",
-      icon: subjectIcons[subjectSlug as keyof typeof subjectIcons] || "📖",
+      color: subjectColors[subjectSlug as keyof typeof subjectColors] || 'bg-gray-200',
+      icon: subjectIcons[subjectSlug as keyof typeof subjectIcons] || '📖',
     };
   });
 
