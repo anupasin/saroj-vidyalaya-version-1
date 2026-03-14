@@ -57,7 +57,7 @@ export default defineType({
             title: 'Icon Emoji',
             type: 'string',
             description: 'Single emoji for the card (e.g. 🧬, 🌌, 🔭)',
-            validation: Rule => Rule.max(2)
+
         }),
         defineField({
             name: 'publishedAt',
