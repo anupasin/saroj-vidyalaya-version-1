@@ -40,9 +40,9 @@ export default async function HorizonsPage() {
                     Nothing here yet. The first horizon is coming soon.
                 </p>
             ) : (
-                <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {horizons.map((h: any) => (
-                        <div key={h.slug.current} className="break-inside-avoid">
+                        <div key={h.slug.current} className="flex">
                             <HorizonCard
                                 title={h.title}
                                 summary={h.summary}

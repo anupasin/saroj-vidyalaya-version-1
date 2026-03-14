@@ -42,8 +42,8 @@ export function HorizonCard({
     const badgeClass = branchColors[branch] || "bg-gray-100 text-gray-800"
 
     return (
-        <Link href={`/horizons/${slug}`} className="block">
-            <Card className="flex flex-col transition-all duration-300 hover:shadow-lg hover:scale-[1.02] border-2 hover:border-brand-gold/50">
+        <Link href={`/horizons/${slug}`} className="block w-full">
+            <Card className="h-full flex flex-col transition-all duration-300 hover:shadow-lg hover:scale-[1.02] border-2 hover:border-brand-gold/50">
                 <CardHeader>
                     <div className="flex items-start justify-between gap-2 mb-2">
                         <span className={`text-xs font-semibold px-2 py-1 rounded-full font-nunito capitalize ${badgeClass}`}>
