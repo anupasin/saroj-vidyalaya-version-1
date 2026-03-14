@@ -39,17 +39,18 @@ const Navbar = () => {
           <Link href="/topics" className="text-gray-700 dark:text-gray-300 hover:text-brand-gold transition-colors">
             Topics
           </Link>
+          <Link href="/horizons" className="text-gray-700 dark:text-gray-300 hover:text-brand-gold transition-colors">
+            New Horizons
+          </Link>
 
           {/* Auth buttons - Desktop */}
           <SignedOut>
             <SignInButton mode="modal">
-              {/* Added cursor-pointer */}
               <button className="text-gray-700 dark:text-gray-300 hover:text-brand-gold transition-colors cursor-pointer">
                 Sign In
               </button>
             </SignInButton>
             <SignUpButton mode="modal">
-              {/* Added cursor-pointer to the UI Button */}
               <Button className="bg-brand-gold hover:bg-brand-gold/90 text-white cursor-pointer">
                 Sign Up
               </Button>
@@ -63,7 +64,7 @@ const Navbar = () => {
             <UserButton
               appearance={{
                 elements: {
-                  avatarBox: "w-10 h-10 cursor-pointer" // Ensures the profile pic also shows the hand
+                  avatarBox: "w-10 h-10 cursor-pointer"
                 }
               }}
             />
@@ -104,6 +105,13 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               Topics
+            </Link>
+            <Link
+              href="/horizons"
+              className="text-gray-700 dark:text-gray-300 py-2 px-4 hover:bg-brand-gold/10 rounded"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              New Horizons
             </Link>
 
             {/* Auth buttons - Mobile */}
