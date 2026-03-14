@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { baseUrl } from '@/lib/constants/site';
+import { auth } from '@clerk/nextjs/server';
+import { AuthGate } from '@/components/AuthGate';
 
 const query = `
   *[_type == "horizon" && slug.current == $slug][0] {
@@ -62,7 +64,9 @@ export default async function HorizonPage({ params }: PageProps) {
 
     if (!data) return notFound();
 
-    return (
+    const { userId } = await auth();
+
+    const HorizonContent = () => (
         <div className="container mx-auto px-6 pt-24 pb-12 max-w-3xl">
             <Link
                 href="/horizons"
@@ -94,4 +98,17 @@ export default async function HorizonPage({ params }: PageProps) {
             </article>
         </div>
     );
+
+    if (!userId) {
+        return (
+            <>
+                <div className="blur-sm pointer-events-none select-none">
+                    <HorizonContent />
+                </div>
+                <AuthGate lessonTitle={data.title} />
+            </>
+        );
+    }
+
+    return <HorizonContent />;
 }
