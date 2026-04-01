@@ -1,7 +1,7 @@
-import { PortableText, type PortableTextComponents } from '@portabletext/react'
-import Image from 'next/image'
-import { urlFor } from '@/lib/sanity.client'
-import { Quiz } from '@/components/Quiz'
+import { PortableText, type PortableTextComponents } from "@portabletext/react";
+import Image from "next/image";
+import { urlFor } from "@/lib/sanity.client";
+import { Quiz } from "@/components/Quiz";
 
 const components: PortableTextComponents = {
   types: {
@@ -13,7 +13,7 @@ const components: PortableTextComponents = {
             {value.image && (
               <Image
                 src={urlFor(value.image).width(800).url()}
-                alt={value.title || 'Illustration'}
+                alt={value.title || "Illustration"}
                 width={800}
                 height={500}
                 className="w-full h-auto"
@@ -21,7 +21,7 @@ const components: PortableTextComponents = {
             )}
           </div>
         </div>
-      )
+      );
     },
 
     // 2. Embedded Quiz Block
@@ -30,19 +30,19 @@ const components: PortableTextComponents = {
         <div className="mt-12 mb-12">
           <Quiz title={value.title} questions={value.questions} />
         </div>
-      )
+      );
     },
   },
 
   marks: {
     link: ({ value, children }) => {
-      const isExternal = value?.href?.startsWith('http')
+      const isExternal = value?.href?.startsWith("http");
 
       return (
         <a
           href={value.href}
-          target={isExternal ? '_blank' : undefined}
-          rel={isExternal ? 'noopener noreferrer' : undefined}
+          target={isExternal ? "_blank" : undefined}
+          rel={isExternal ? "noopener noreferrer" : undefined}
           className="
             text-primary
             underline
@@ -55,17 +55,19 @@ const components: PortableTextComponents = {
         >
           {children}
         </a>
-      )
+      );
     },
   },
 
   block: {
-    // Normal paragraphs
     normal: ({ children }) => (
       <p className="mb-4 leading-relaxed whitespace-pre-line">{children}</p>
     ),
-
-    // Headings
+    h1: ({ children }) => (
+      <h2 className="text-3xl font-nunito font-bold text-primary mt-12 mb-4">
+        {children}
+      </h2>
+    ),
     h2: ({ children }) => (
       <h2 className="text-3xl font-nunito font-bold text-primary mt-12 mb-4">
         {children}
@@ -94,8 +96,8 @@ const components: PortableTextComponents = {
       <ol className="list-decimal pl-6 space-y-2 mb-6">{children}</ol>
     ),
   },
-}
+};
 
 export function CustomPortableText({ value }: { value: any }) {
-  return <PortableText value={value} components={components} />
+  return <PortableText value={value} components={components} />;
 }
