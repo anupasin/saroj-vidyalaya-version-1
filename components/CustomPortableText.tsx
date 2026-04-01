@@ -64,7 +64,7 @@ const components: PortableTextComponents = {
       <p className="mb-4 leading-relaxed whitespace-pre-line">{children}</p>
     ),
     h1: ({ children }) => (
-      <h2 className="text-3xl font-nunito font-bold text-primary mt-12 mb-4">
+      <h2 className="text-4xl font-nunito font-bold text-brand-gold mt-16 mb-6">
         {children}
       </h2>
     ),
