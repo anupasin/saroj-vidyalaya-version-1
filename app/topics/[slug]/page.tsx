@@ -1,15 +1,17 @@
-import React from 'react'
-import { client } from '@/lib/sanity.client'
-import { CustomPortableText } from '@/components/CustomPortableText'
-import { notFound } from 'next/navigation'
-import Link from 'next/link'
-import { auth } from '@clerk/nextjs/server'
-import { AuthGate } from '@/components/AuthGate'
-import type { Metadata } from 'next';
-import { baseUrl } from '@/lib/constants/site';
+import React from "react";
+import { client } from "@/lib/sanity.client";
+import { CustomPortableText } from "@/components/CustomPortableText";
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { auth } from "@clerk/nextjs/server";
+import { AuthGate } from "@/components/AuthGate";
+import type { Metadata } from "next";
+import { baseUrl } from "@/lib/constants/site";
 
 export async function generateStaticParams() {
-  const topics = await client.fetch(`*[_type == "topic"]{ "slug": slug.current }`);
+  const topics = await client.fetch(
+    `*[_type == "topic"]{ "slug": slug.current }`,
+  );
   return topics.map((t: any) => ({ slug: t.slug }));
 }
 
@@ -21,22 +23,22 @@ export async function generateMetadata({
   const { slug } = await params;
   const data = await client.fetch(
     `*[_type == "topic" && slug.current == $slug][0]{ title, description }`,
-    { slug }
+    { slug },
   );
 
-  if (!data) return { title: 'Topic Not Found' };
+  if (!data) return { title: "Topic Not Found" };
 
   return {
     title: data.title,
-    description: data.description ?? '',
+    description: data.description ?? "",
     alternates: {
       canonical: `${baseUrl}/topics/${slug}`,
     },
     openGraph: {
       title: data.title,
-      description: data.description ?? '',
+      description: data.description ?? "",
       url: `${baseUrl}/topics/${slug}`,
-      type: 'article',
+      type: "article",
     },
   };
 }
@@ -53,19 +55,19 @@ const query = `
       icon
     }
   }
-`
+`;
 
 interface PageProps {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string }>;
 }
 
 export default async function TopicPage({ params }: PageProps) {
-  const { slug } = await params
+  const { slug } = await params;
 
-  const data = await client.fetch(query, { slug })
+  const data = await client.fetch(query, { slug });
 
   if (!data) {
-    return notFound()
+    return notFound();
   }
 
   const { userId } = await auth();
@@ -74,15 +76,13 @@ export default async function TopicPage({ params }: PageProps) {
   const TopicContent = () => (
     <div className="container mx-auto px-6 pt-24 pb-12 max-w-4xl">
       <article className="prose prose-lg dark:prose-invert max-w-none">
-
         {/* The Title */}
-        <h1 className="text-4xl md:text-5xl font-nunito font-bold text-brand-gold mb-8">
+        <h1 className="not-prose text-4xl md:text-5xl font-nunito font-bold text-brand-gold mb-8">
           {data.title}
         </h1>
 
         {/* The Content */}
         <CustomPortableText value={data.body} />
-
       </article>
 
       {/* Related Topics Section */}
