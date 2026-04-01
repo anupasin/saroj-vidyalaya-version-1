@@ -77,7 +77,14 @@ export default async function TopicPage({ params }: PageProps) {
     <div className="container mx-auto px-6 pt-24 pb-12 max-w-4xl">
       <article className="prose prose-lg dark:prose-invert max-w-none">
         {/* The Title */}
-        <h1 className="not-prose text-4xl md:text-5xl font-nunito font-bold text-brand-gold mb-8">
+        <h1
+          style={{
+            fontSize: "2.5rem",
+            fontWeight: "bold",
+            color: "#C9A84C",
+            marginBottom: "2rem",
+          }}
+        >
           {data.title}
         </h1>
 
