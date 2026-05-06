@@ -5,6 +5,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { ClerkProvider } from '@clerk/nextjs';
 import { baseUrl } from '@/lib/constants/site';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
@@ -12,13 +13,13 @@ export const metadata: Metadata = {
     template: '%s | Saroj Vidyalaya',
     default: 'Saroj Vidyalaya — Joyful Learning',
   },
-  description: 'A tribute to Saroj Singh, offering joyful and accessible learning resources for curious minds.',
+  description: 'A heartfelt tribute to Saroj Singh offering curiosity-driven, interactive online courses in English, Geography, Science, Mathematics, Coding, and General Knowledge. Joyful, accessible learning with quizzes for curious minds.',
   alternates: {
     canonical: baseUrl,
   },
   openGraph: {
     title: 'Saroj Vidyalaya',
-    description: 'Joyful and accessible learning resources for curious minds.',
+    description: 'Joyful and accessible learning resources for curious minds — a tribute to Saroj Singh.',
     url: baseUrl,
     siteName: 'Saroj Vidyalaya',
     locale: 'en_US',
@@ -35,12 +36,29 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Saroj Vidyalaya',
-    description: 'Joyful and accessible learning resources for curious minds.',
+    description: 'Joyful and accessible learning resources for curious minds — a tribute to Saroj Singh.',
     images: ['/og-default.png'],
   },
   icons: {
     icon: '/lotus.png',
   },
+};
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "Saroj Vidyalaya",
+  "url": baseUrl,
+  "description": "A warm, curiosity-first educational platform and tribute to Saroj Singh, making learning engaging with analogies, metaphors, and interactive lessons.",
+  "logo": `${baseUrl}/lotus.png`,
+  "founder": {
+    "@type": "Person",
+    "name": "Anupam",
+    "description": "Creator of Saroj Vidyalaya as a loving tribute to his mother, Saroj Singh"
+  },
+  "sameAs": [
+    "https://sarojvidyalaya.com"
+  ]
 };
 
 export default function RootLayout({
@@ -79,6 +97,13 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+          <Script
+            id="json-ld"
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(structuredData),
+            }}
+          />
         </body>
       </html>
     </ClerkProvider>
