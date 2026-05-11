@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 
 const HeroSection = () => {
   return (
@@ -18,13 +19,13 @@ const HeroSection = () => {
           
           <div className="flex justify-center">
             <div className="relative w-72 h-72 md:w-96 md:h-96">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <img 
-                  src="/lotus.png" 
-                  alt="Lotus Flower representing Saroj - beauty rising from challenges" 
-                  className="w-full h-full object-contain"
-                />
-              </div>
+              <Image
+                src="/lotus.png"
+                alt="Lotus Flower representing Saroj - beauty rising from challenges"
+                fill
+                className="object-contain"
+                priority
+              />
             </div>
           </div>
         </div>
